@@ -65,7 +65,59 @@
 							<article id="rsvp">
 								<h2 class="major">RSVP</h2>
 								<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
-								<p>RSVP information coming soon...</p>
+								<p>We're so excited to celebrate with you! Please let us know which days you'll be joining us in beautiful Tuscany. Your presence would make our celebration complete!</p>
+								
+								<form id="rsvp-form">
+									<div class="fields">
+										<div class="field">
+											<label>Select the days you'll be attending:</label>
+											<div class="field half">
+												<input type="checkbox" id="day-sat-09" name="attendance" value="Saturday May 9, 2026">
+												<label for="day-sat-09">Saturday, May 9, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-sun-10" name="attendance" value="Sunday May 10, 2026">
+												<label for="day-sun-10">Sunday, May 10, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-mon-11" name="attendance" value="Monday May 11, 2026">
+												<label for="day-mon-11">Monday, May 11, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-tue-12" name="attendance" value="Tuesday May 12, 2026">
+												<label for="day-tue-12">Tuesday, May 12, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-wed-13" name="attendance" value="Wednesday May 13, 2026">
+												<label for="day-wed-13">Wednesday, May 13, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-thu-14" name="attendance" value="Thursday May 14, 2026">
+												<label for="day-thu-14">Thursday, May 14, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-fri-15" name="attendance" value="Friday May 15, 2026">
+												<label for="day-fri-15">Friday, May 15, 2026</label>
+											</div>
+											<div class="field half">
+												<input type="checkbox" id="day-sat-16" name="attendance" value="Saturday May 16, 2026">
+												<label for="day-sat-16">Saturday, May 16, 2026</label>
+											</div>
+										</div>
+										<div class="field">
+											<label for="rsvp-email">Email</label>
+											<input type="email" name="email" id="rsvp-email" value="" placeholder="your.email@example.com" required />
+										</div>
+										<div class="field">
+											<label for="rsvp-message">Additional Information</label>
+											<textarea name="message" id="rsvp-message" placeholder="Please tell us if you have any food allergies or restrictions and anything else!" rows="6"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="button" value="RSVP" class="primary" onclick="sendRSVP()" /></li>
+										<li><input type="reset" value="Reset" /></li>
+									</ul>
+								</form>
 							</article>
 
 						<!-- What To Expect -->
@@ -336,6 +388,49 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+			<script type="text/javascript">
+				(function(){
+					emailjs.init("6kG5NTm3wu5yngqU_");
+				})();
+
+				function sendRSVP() {
+					// Get selected days
+					const checkboxes = document.querySelectorAll('input[name="attendance"]:checked');
+					const selectedDays = Array.from(checkboxes).map(cb => cb.value).join(', ');
+					
+					// Get form data
+					const email = document.getElementById('rsvp-email').value;
+					const message = document.getElementById('rsvp-message').value;
+					
+					// Validate required fields
+					if (!email) {
+						alert('Please enter your email address.');
+						return false;
+					}
+					
+					// Prepare template parameters
+					const templateParams = {
+						to_email: 'maximilian.a.c.saller@gmail.com',
+						from_email: email,
+						attendance_days: selectedDays || 'No days selected',
+						message: message || 'No additional information provided',
+						reply_to: email
+					};
+
+					// Send email using EmailJS
+					emailjs.send('service_aicu09m', 'template_732k242', templateParams)
+						.then(function(response) {
+							alert('RSVP sent successfully! Thank you for responding.');
+							document.getElementById('rsvp-form').reset();
+						}, function(error) {
+							alert('Failed to send RSVP. Please try again or contact us directly.');
+							console.log('EmailJS error:', error);
+						});
+					
+					return false; // Prevent form submission
+				}
+			</script>
 
 	</body>
 </html>
