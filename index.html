@@ -14,6 +14,11 @@
 		<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Ma+Shan+Zheng&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		
+		<!-- Leaflet CSS -->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+		      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
+		      crossorigin=""/>
 	</head>
 	<body class="is-preload">
 
@@ -57,8 +62,29 @@
 						<!-- Travel Info -->
 							<article id="travelinfo">
 								<h2 class="major">Travel Info</h2>
-								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p>Travel information coming soon...</p>
+								
+								<div id="villa-location-map" style="height: 400px; width: 100%; margin: 2rem 0; border-radius: 8px; overflow: hidden;"></div>
+								
+								<h3>Villa Isola Serena Location</h3>
+								<p><strong>Villa Isola Serena</strong> is beautifully positioned in the heart of Tuscany in Castellina in Chianti. The villa sits on 4 acres of stunning countryside with breathtaking views of vineyards and olive groves, perfectly located between Florence and Rome.</p>
+								
+								<div style="display: flex; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap;">
+									<div style="flex: 1; min-width: 200px;">
+										<h4>From Florence</h4>
+										<p style="color: #4ecdc4; font-weight: bold;">~80km • 1 hour drive</p>
+										<p>Florence Airport (FLR) is the closest major airport to the villa.</p>
+									</div>
+									<div style="flex: 1; min-width: 200px;">
+										<h4>From Rome</h4>
+										<p style="color: #ff6b6b; font-weight: bold;">~200km • 2.5 hours drive</p>
+										<p>Rome Fiumicino (FCO) offers the most international flight options.</p>
+									</div>
+								</div>
+								
+								<h4>Getting There</h4>
+								<p>We highly recommend renting a car for maximum flexibility exploring Tuscany. The villa is easily accessible by car and having your own transportation will allow you to explore the charming hilltop towns, wineries, and countryside at your own pace.</p>
+								
+								<p><strong>Additional Airport Option:</strong> Pisa Airport (PSA) is approximately 1.5 hours from the villa and offers good European connections.</p>
 							</article>
 
 						<!-- RSVP -->
@@ -481,6 +507,132 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					
 					return false; // Prevent form submission
 				}
+			</script>
+
+			<!-- Leaflet JavaScript -->
+			<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+			        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
+			        crossorigin=""></script>
+
+			<script>
+				// Initialize map when Travel Info section is opened
+				function initializeVillaMap() {
+					// Check if map is already initialized
+					if (window.villaMap) {
+						return;
+					}
+
+					// Coordinates
+					const villaCoords = [43.47, 11.29]; // Castellina in Chianti (approximate)
+					const florenceCoords = [43.7793, 11.2463];
+					const romeCoords = [41.9028, 12.4964];
+
+					// Initialize map centered on villa location
+					window.villaMap = L.map('villa-location-map').setView(villaCoords, 8);
+
+					// Add OpenStreetMap tiles
+					L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+						attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+					}).addTo(window.villaMap);
+
+					// Create custom icons
+					const villaIcon = L.divIcon({
+						className: 'custom-villa-marker',
+						html: '<div style="background-color: #ffd93d; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>',
+						iconSize: [26, 26],
+						iconAnchor: [13, 13]
+					});
+
+					const florenceIcon = L.divIcon({
+						className: 'custom-florence-marker',
+						html: '<div style="background-color: #4ecdc4; width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+						iconSize: [20, 20],
+						iconAnchor: [10, 10]
+					});
+
+					const romeIcon = L.divIcon({
+						className: 'custom-rome-marker',
+						html: '<div style="background-color: #ff6b6b; width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+						iconSize: [20, 20],
+						iconAnchor: [10, 10]
+					});
+
+					// Add markers
+					L.marker(villaCoords, {icon: villaIcon}).addTo(window.villaMap)
+						.bindPopup('<strong>Villa Isola Serena</strong><br>Castellina in Chianti, Tuscany');
+					
+					L.marker(florenceCoords, {icon: florenceIcon}).addTo(window.villaMap)
+						.bindPopup('<strong>Florence</strong><br>~80km from villa');
+					
+					L.marker(romeCoords, {icon: romeIcon}).addTo(window.villaMap)
+						.bindPopup('<strong>Rome</strong><br>~200km from villa');
+
+					// Pre-computed route coordinates (simplified for clean look)
+					const florenceToVillaRoute = [
+						[43.7793, 11.2463], // Florence
+						[43.7500, 11.2500],
+						[43.7000, 11.2600],
+						[43.6500, 11.2700],
+						[43.6000, 11.2800],
+						[43.5500, 11.2850],
+						[43.5000, 11.2900],
+						[43.47, 11.29] // Villa (approximate)
+					];
+
+					const romeToVillaRoute = [
+						[41.9028, 12.4964], // Rome
+						[42.0000, 12.4000],
+						[42.1000, 12.3000],
+						[42.2000, 12.2000],
+						[42.3000, 12.1000],
+						[42.4000, 12.0000],
+						[42.5000, 11.9000],
+						[42.6000, 11.8000],
+						[42.7000, 11.7000],
+						[42.8000, 11.6000],
+						[42.9000, 11.5000],
+						[43.0000, 11.4000],
+						[43.1000, 11.3500],
+						[43.2000, 11.3200],
+						[43.3000, 11.3000],
+						[43.4000, 11.2900],
+						[43.47, 11.29] // Villa (approximate)
+					];
+
+					// Add route polylines with clean styling
+					L.polyline(florenceToVillaRoute, {
+						color: '#4ecdc4',
+						weight: 3,
+						opacity: 0.8,
+						smoothFactor: 1
+					}).addTo(window.villaMap);
+
+					L.polyline(romeToVillaRoute, {
+						color: '#ff6b6b',
+						weight: 3,
+						opacity: 0.8,
+						smoothFactor: 1
+					}).addTo(window.villaMap);
+
+					// Fit map to show all points
+					const group = new L.featureGroup([
+						L.marker(villaCoords),
+						L.marker(florenceCoords),
+						L.marker(romeCoords)
+					]);
+					window.villaMap.fitBounds(group.getBounds().pad(0.1));
+				}
+
+				// Initialize map when Travel Info tab is clicked
+				document.addEventListener('DOMContentLoaded', function() {
+					const travelInfoLink = document.querySelector('a[href="#travelinfo"]');
+					if (travelInfoLink) {
+						travelInfoLink.addEventListener('click', function() {
+							// Delay initialization to ensure the element is visible
+							setTimeout(initializeVillaMap, 300);
+						});
+					}
+				});
 			</script>
 
 	</body>
