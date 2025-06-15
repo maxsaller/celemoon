@@ -211,6 +211,10 @@
 											<input type="email" name="email" id="rsvp-email" value="" placeholder="your.email@example.com" required />
 										</div>
 										<div class="field">
+											<label for="rsvp-guests">Guests:</label>
+											<input type="text" name="guests" id="rsvp-guests" value="" placeholder="Please tell us who will be joining us" />
+										</div>
+										<div class="field">
 											<label for="rsvp-message">Additional Information</label>
 											<textarea name="message" id="rsvp-message" placeholder="Please tell us if you have any food allergies or restrictions and anything else!" rows="6"></textarea>
 										</div>
@@ -532,6 +536,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				function sendRSVP() {
 					// Get form data
 					const email = document.getElementById('rsvp-email').value;
+					const guests = document.getElementById('rsvp-guests').value;
 					const message = document.getElementById('rsvp-message').value;
 					const notAttending = document.getElementById('not-attending').checked;
 					
@@ -556,6 +561,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						to_email: 'maximilian.a.c.saller@gmail.com',
 						from_email: email,
 						attendance_days: attendanceInfo,
+						guests: guests || 'No guests specified',
 						message: message || 'No additional information provided',
 						reply_to: email
 					};
