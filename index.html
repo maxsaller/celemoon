@@ -64,7 +64,8 @@
 						<!-- RSVP -->
 							<article id="rsvp">
 								<h2 class="major">RSVP</h2>
-								<p>We're so excited to celebrate with you! Please let us know which days you'll be joining us in beautiful Tuscany. Your presence would make our celebration complete!</p>
+								<p>We're so grateful to all of you who have expressed excitement about joining us in Italy to celebrate our marriage. As this is a very intimate occasion, we are kindly asking for firm RSVP's at this time, so we can manage headcount and make sure to assign bedrooms accordingly. Please note that, unfortunately, we won't be able to accommodate any babies or children at the villa.</p>
+								<p><strong>Kindly RSVP by July 30th</strong> and let us know what days you plan on joining us, as well as any additional information we may need to know.</p>
 								
 								<form id="rsvp-form">
 									<div class="fields">
@@ -101,6 +102,13 @@
 											<div class="field half">
 												<input type="checkbox" id="day-sat-16" name="attendance" value="Saturday May 16, 2026">
 												<label for="day-sat-16">Saturday, May 16, 2026</label>
+											</div>
+										</div>
+										<div class="field">
+											<label>If you are unable to attend, let us know below:</label>
+											<div class="field">
+												<input type="checkbox" id="not-attending" name="not-attending" value="Not attending" onchange="toggleAttendance()">
+												<label for="not-attending">I/We won't be attending</label>
 											</div>
 										</div>
 										<div class="field">
@@ -393,14 +401,29 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 					emailjs.init("6kG5NTm3wu5yngqU_");
 				})();
 
-				function sendRSVP() {
-					// Get selected days
-					const checkboxes = document.querySelectorAll('input[name="attendance"]:checked');
-					const selectedDays = Array.from(checkboxes).map(cb => cb.value).join(', ');
+				function toggleAttendance() {
+					const notAttendingCheckbox = document.getElementById('not-attending');
+					const dayCheckboxes = document.querySelectorAll('input[name="attendance"]');
 					
+					if (notAttendingCheckbox.checked) {
+						// Disable and uncheck all day checkboxes
+						dayCheckboxes.forEach(checkbox => {
+							checkbox.disabled = true;
+							checkbox.checked = false;
+						});
+					} else {
+						// Re-enable all day checkboxes
+						dayCheckboxes.forEach(checkbox => {
+							checkbox.disabled = false;
+						});
+					}
+				}
+
+				function sendRSVP() {
 					// Get form data
 					const email = document.getElementById('rsvp-email').value;
 					const message = document.getElementById('rsvp-message').value;
+					const notAttending = document.getElementById('not-attending').checked;
 					
 					// Validate required fields
 					if (!email) {
@@ -408,11 +431,21 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						return false;
 					}
 					
+					let attendanceInfo;
+					if (notAttending) {
+						attendanceInfo = 'Will not be attending';
+					} else {
+						// Get selected days
+						const checkboxes = document.querySelectorAll('input[name="attendance"]:checked');
+						const selectedDays = Array.from(checkboxes).map(cb => cb.value).join(', ');
+						attendanceInfo = selectedDays || 'No days selected';
+					}
+					
 					// Prepare template parameters
 					const templateParams = {
 						to_email: 'maximilian.a.c.saller@gmail.com',
 						from_email: email,
-						attendance_days: selectedDays || 'No days selected',
+						attendance_days: attendanceInfo,
 						message: message || 'No additional information provided',
 						reply_to: email
 					};
@@ -422,6 +455,10 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						.then(function(response) {
 							alert('RSVP sent successfully! Thank you for responding.');
 							document.getElementById('rsvp-form').reset();
+							// Re-enable day checkboxes after reset
+							document.querySelectorAll('input[name="attendance"]').forEach(checkbox => {
+								checkbox.disabled = false;
+							});
 						}, function(error) {
 							alert('Failed to send RSVP. Please try again or contact us directly.');
 							console.log('EmailJS error:', error);
