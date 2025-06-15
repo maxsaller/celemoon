@@ -1343,13 +1343,13 @@ input, select, textarea {
 	padding: 2rem 3rem;
 	border-radius: 8px;
 	background: linear-gradient(90deg, 
-		rgba(168, 209, 220, 0.9) 0%, rgba(168, 209, 220, 0.9) 14.28%, 
+		rgba(238, 198, 136, 0.9) 0%, rgba(238, 198, 136, 0.9) 14.28%, 
 		rgba(230, 221, 209, 0.9) 14.28%, rgba(230, 221, 209, 0.9) 28.56%, 
-		rgba(168, 209, 220, 0.9) 28.56%, rgba(168, 209, 220, 0.9) 42.84%, 
+		rgba(238, 198, 136, 0.9) 28.56%, rgba(238, 198, 136, 0.9) 42.84%, 
 		rgba(230, 221, 209, 0.9) 42.84%, rgba(230, 221, 209, 0.9) 57.12%, 
-		rgba(168, 209, 220, 0.9) 57.12%, rgba(168, 209, 220, 0.9) 71.4%, 
+		rgba(238, 198, 136, 0.9) 57.12%, rgba(238, 198, 136, 0.9) 71.4%, 
 		rgba(230, 221, 209, 0.9) 71.4%, rgba(230, 221, 209, 0.9) 85.68%, 
-		rgba(168, 209, 220, 0.9) 85.68%, rgba(168, 209, 220, 0.9) 100%);
+		rgba(238, 198, 136, 0.9) 85.68%, rgba(238, 198, 136, 0.9) 100%);
 	backdrop-filter: blur(4px);
 	-webkit-backdrop-filter: blur(4px);
 	text-align: center;
@@ -1361,7 +1361,7 @@ input, select, textarea {
 .greeting-card .main-message {
 	font-size: 0.8rem;
 	line-height: 1.5;
-	color: #d2622b;
+	color: #5a735a;
 	margin-bottom: 2.25rem;
 	font-weight: 600;
 }
@@ -1375,7 +1375,7 @@ input, select, textarea {
 .farewell-messages p {
 	margin: 0;
 	font-size: 0.8rem;
-	color: #d2622b;
+	color: #5a735a;
 	font-weight: 700;
 }
 
