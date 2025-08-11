@@ -63,6 +63,38 @@
 			.leaflet-tooltip.rome-label::before {
 				border-top-color: rgba(90, 115, 90, 0.9);
 			}
+			
+			/* Image overlay styles */
+			.image-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.9);
+				display: none;
+				z-index: 10000;
+				cursor: pointer;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.image-overlay img {
+				max-width: 95%;
+				max-height: 95%;
+				object-fit: contain;
+				box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+			}
+			
+			.image-overlay.show {
+				display: flex;
+				animation: fadeIn 0.3s ease;
+			}
+			
+			@keyframes fadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -234,6 +266,11 @@
 						<!-- What To Expect -->
 							<article id="whattoexpect">
 								<h2 class="major">What To Expect</h2>
+								
+								<ul class="actions" style="margin-bottom: 2rem; justify-content: center;">
+									<li><a href="#rooms" class="button">Rooms</a></li>
+									<li><a href="#calendar" class="button">Calendar</a></li>
+								</ul>
 								<span class="image main"><img src="images/villa_exterior_night.webp" alt="" /></span>
 								<p>There is no set itinerary! This cele-moon is all about relaxing and spending time together in the backdrop of beautiful Tuscany. We will plan a formal dinner to celebrate, but everything in between will be left to your discretion! We are probably going to plan some day trips out and about to explore, which you are more than welcome to join or skip if you want to lounge by the pool instead! We will keep all of you in the loop as we continue to plan.</p>
 								
@@ -246,6 +283,62 @@
 								
 								<h3>What's Next</h3>
 								<p>Feel free to reach out to either of us to plan travel, food, outfits, and the like! We'll be finalizing more plans and activities as time goes on, so we'll be sure to keep you all in the loop!</p>
+							</article>
+
+						<!-- Rooms -->
+							<article id="rooms">
+								<h2 class="major">Rooms</h2>
+								
+								<!-- Floor Plan Grid -->
+								<div style="border: 1px solid rgba(255,255,255,0.2); padding: 1rem; margin: 2rem 0; border-radius: 4px;">
+									<div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 1rem;">
+										<img src="images/floor_plan_main_2.png" alt="Main House Second Floor" style="width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: opacity 0.2s ease;" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor')" />
+										<img src="images/floor_plan_main_1.png" alt="Main House First Floor" style="width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: opacity 0.2s ease;" onclick="showImageOverlay('images/floor_plan_main_1.png', 'Main House First Floor')" />
+										<img src="images/floor_plan_guest_1.png" alt="Guest House Casa Matteo" style="width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: opacity 0.2s ease;" onclick="showImageOverlay('images/floor_plan_guest_1.png', 'Guest House Casa Matteo')" />
+										<img src="images/floor_plan_guest_2.png" alt="Guest House Oliviero" style="width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: opacity 0.2s ease;" onclick="showImageOverlay('images/floor_plan_guest_2.png', 'Guest House Oliviero')" />
+									</div>
+								</div>
+
+								<!-- Room Assignments -->
+								<div style="margin-top: 3rem;">
+									<h3 style="text-decoration: underline; font-weight: bold;">Main House Second Floor</h3>
+									<ul style="list-style: none; padding-left: 0; margin-left: 1rem;">
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 1:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Patricia & Max</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 2:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Elizabeth & Harald</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 3:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Fei & Andy</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 4:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Susan & Eva from 9th May - 11th May</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 4:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Mei-Yi & Samantha from 12th May - 16th May</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 5:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Adrian & Marco from 9th May - 11th May</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 5:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_2.png', 'Main House Second Floor'); return false;" style="color: inherit; text-decoration: none;">Gung Gung & Ryan from 12th May - 16th May</a></li>
+									</ul>
+
+									<h3 style="text-decoration: underline; font-weight: bold; margin-top: 2rem;">Main House First Floor</h3>
+									<ul style="list-style: none; padding-left: 0; margin-left: 1rem;">
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 6:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_1.png', 'Main House First Floor'); return false;" style="color: inherit; text-decoration: none;">Antony</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 7:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_main_1.png', 'Main House First Floor'); return false;" style="color: inherit; text-decoration: none;">Siu</a></li>
+									</ul>
+
+									<h3 style="text-decoration: underline; font-weight: bold; margin-top: 2rem;">Guest House Casa Matteo</h3>
+									<ul style="list-style: none; padding-left: 0; margin-left: 1rem;">
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 8:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_guest_1.png', 'Guest House Casa Matteo'); return false;" style="color: inherit; text-decoration: none;">Katie & Nate</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 9:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_guest_1.png', 'Guest House Casa Matteo'); return false;" style="color: inherit; text-decoration: none;">Joe & Jim from 9th May - 12th May</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 9:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_guest_1.png', 'Guest House Casa Matteo'); return false;" style="color: inherit; text-decoration: none;">Annalisa & Omar & Zaccaria from 13th May - 16th May</a></li>
+									</ul>
+
+									<h3 style="text-decoration: underline; font-weight: bold; margin-top: 2rem;">Guest House Casa Oliviero</h3>
+									<ul style="list-style: none; padding-left: 0; margin-left: 1rem;">
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 10:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_guest_2.png', 'Guest House Oliviero'); return false;" style="color: inherit; text-decoration: none;">Deena & Ezra</a></li>
+										<li style="margin: 0.5rem 0;"><strong>Bedroom 11:</strong> <a href="#" onclick="showImageOverlay('images/floor_plan_guest_2.png', 'Guest House Oliviero'); return false;" style="color: inherit; text-decoration: none;">Allie & Dino</a></li>
+									</ul>
+								</div>
+							</article>
+
+						<!-- Calendar -->
+							<article id="calendar">
+								<h2 class="major">Calendar</h2>
+								<div style="text-align: center; margin: 1rem 0;">
+									<img id="calendar-image" src="images/calendar.png" alt="Wedding Week Calendar" style="width: 100%; height: auto; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: opacity 0.2s ease;" onclick="showImageOverlay()" />
+								</div>
 							</article>
 
 
@@ -500,6 +593,11 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 			</div>
 
+		<!-- Image Overlay -->
+			<div id="image-overlay" class="image-overlay" onclick="hideImageOverlay(event)">
+				<img id="overlay-image" src="" alt="" />
+			</div>
+
 		<!-- BG -->
 			<div id="bg"></div>
 
@@ -748,6 +846,67 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						setTimeout(function() {
 							window.villaMap.invalidateSize();
 						}, 200);
+					}
+				});
+			</script>
+
+			<script>
+				// Image overlay functionality
+				function showImageOverlay(imageSrc, imageAlt) {
+					const overlay = document.getElementById('image-overlay');
+					const overlayImage = document.getElementById('overlay-image');
+					
+					// If no parameters provided, use calendar image (backwards compatibility)
+					if (!imageSrc) {
+						const calendarImage = document.getElementById('calendar-image');
+						overlayImage.src = calendarImage.src;
+						overlayImage.alt = calendarImage.alt;
+					} else {
+						overlayImage.src = imageSrc;
+						overlayImage.alt = imageAlt || '';
+					}
+					
+					overlay.classList.add('show');
+				}
+				
+				function hideImageOverlay(event) {
+					if (event) {
+						event.preventDefault();
+						event.stopPropagation();
+					}
+					const overlay = document.getElementById('image-overlay');
+					overlay.classList.remove('show');
+					
+					// Determine which page to return to based on current hash or overlay context
+					const currentHash = window.location.hash;
+					if (currentHash === '#calendar') {
+						// Stay on calendar page
+						return;
+					} else if (currentHash === '#rooms') {
+						// Stay on rooms page
+						return;
+					} else {
+						// If we came from a room assignment link, return to rooms
+						// If we came from calendar, return to calendar
+						// Default behavior: don't change hash
+						return;
+					}
+				}
+				
+				// Add escape key listener
+				document.addEventListener('keydown', function(event) {
+					if (event.key === 'Escape') {
+						hideImageOverlay(event);
+					}
+				});
+				
+				// Add click listener to the overlay image as well
+				document.addEventListener('DOMContentLoaded', function() {
+					const overlayImage = document.getElementById('overlay-image');
+					if (overlayImage) {
+						overlayImage.addEventListener('click', function(event) {
+							hideImageOverlay(event);
+						});
 					}
 				});
 			</script>
